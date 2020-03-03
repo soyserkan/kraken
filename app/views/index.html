@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+    <title>Image Compress</title>
+  </head>
+  <body>
+    <div class="jumbotron">
+      <h1 class="display-4">Image Compress</h1>
+      <hr class="my-4" />
+      <form class="form-inline" action="/" method="post" id="form">
+        <label for="imageUrl" class="sr-only">Please insert your image url</label>
+        <input type="text" class="form-control col-sm-12 mb-2" id="imageUrl" name="imageUrl" placeholder="Please insert your image url"/>
+        <button type="submit" class="btn btn-primary mb-2 col-sm-2" id="compress">Compress</button>
+      </form>
+    </div>
+
+    <div class="alert alert-success mr-5 ml-5" role="alert" id="success" style="display: none;"></div>
+    <div class="alert alert-danger mr-5 ml-5" role="alert" id="error" style="display: none;"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script>
+      $("#form").ajaxForm({
+            url: '/', 
+            type: 'post',
+            success:(data)=>{
+              $('#success').html(`${data.message}: <a href="${data.compressed_image}">${data.compressed_image}</a>`);
+              $('#success').css('display', 'block');
+              $('#error').css('display', 'none');
+              
+            },
+            error:(err)=>{
+              $('#error').html(err.responseJSON.message);
+              $('#error').css('display', 'block');
+              $('#success').css('display', 'none');
+            }
+      });
+    </script>
+  </body>
+</html>
